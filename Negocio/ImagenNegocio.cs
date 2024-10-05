@@ -9,13 +9,14 @@ namespace Negocio
 {
     public class ImagenNegocio
     {
-        public Imagen ObtenerImagen(int idArticulo)
+        public List<Imagen> ObtenerImagenes(int idArticulo)
         {
             AccesoDatos datos = new AccesoDatos();
 
             datos.setearConsulta("SELECT ID,ImagenUrl From IMAGENES where IdArticulo = " + idArticulo + "");
             datos.ejecutarLectura();
 
+            List<Imagen> imagenes = new List<Imagen>();
             Imagen imagen = new Imagen();
             imagen.IdArticulo = idArticulo;
 
@@ -23,12 +24,12 @@ namespace Negocio
             {
                 imagen.UrlImagen = (string)datos.lector["ImagenUrl"];
                 imagen.Id = (int)datos.lector["Id"];
-                datos.cerrarConexion();
-                return imagen;
+                imagenes.Add(imagen);
+                
             }
 
             datos.cerrarConexion();
-            return null;
+            return imagenes;
         }
 
         public void agregar(Imagen imgNueva)

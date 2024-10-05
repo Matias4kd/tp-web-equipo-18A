@@ -15,8 +15,14 @@ namespace TPWeb_Equipo_18A
         public List<Imagen> ListaImagenes{ get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            ArticuloNegocio negocio = new ArticuloNegocio();
-            ListaArticulo = negocio.listar();
+            if (!IsPostBack)
+            {
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                ListaArticulo = negocio.listar();
+                repRepetidor.DataSource = ListaArticulo;
+                repRepetidor.DataBind();
+
+            }
             //ImagenNegocio Inegocio = new ImagenNegocio();
             //ListaImagenes = Inegocio.ObtenerImagenes();
 
@@ -24,7 +30,13 @@ namespace TPWeb_Equipo_18A
 
         protected void btnSelccionar_Click(object sender, EventArgs e)
         {
+            Button btn = (Button)sender;
 
+            string id = btn.CommandArgument;
+
+            Session.Add("IDArt",id);
+
+            Response.Redirect("FormularioRegistro.aspx");
         }
     }
 }

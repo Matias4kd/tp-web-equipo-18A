@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using dominio;
@@ -43,6 +44,34 @@ namespace Negocio
 			{
 				datos.cerrarConexion();
 			}
+        }
+		public void agregarCliente(Cliente cliente)
+		{
+            
+            try
+            {
+
+                datos.setearConsulta("Insert into Clientes VALUES(@Documento,@Nombre,@Apellido,@Email,@Direccion,@Ciudad,@CP)");
+                datos.setearParametro("@Documento", cliente.Documento);
+                datos.setearParametro("@Nombre", cliente.Nombre);
+                datos.setearParametro("@Apellido", cliente.Apellido);
+                datos.setearParametro("@Email", cliente.Mail);
+                datos.setearParametro("@Direccion", cliente.Direccion);
+                datos.setearParametro("@Ciudad", cliente.Ciudad);
+                datos.setearParametro("@CP", cliente.CodigoPostal);
+
+                datos.ejecutarLectura();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
     }
 }

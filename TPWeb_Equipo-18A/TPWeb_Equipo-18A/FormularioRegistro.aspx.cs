@@ -12,7 +12,7 @@ namespace TPWeb_Equipo_18A
     public partial class FormularioRegistro : System.Web.UI.Page
     {
         public bool ClienteExistente = false;
-        private Cliente cliente = null;
+        private Cliente cliente = new Cliente();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -62,6 +62,10 @@ namespace TPWeb_Equipo_18A
             VoucherNegocio voucherNegocio = new VoucherNegocio();
 
             voucherNegocio.cargarUso(voucher,idProducto, cliente.ID);
+
+
+            //Agregar mensaje de exito
+            //redireccionar a pagina ppal (default)
         }
 
         protected void txtDocumento_TextChanged(object sender, EventArgs e)
@@ -70,15 +74,14 @@ namespace TPWeb_Equipo_18A
             Negocio.ClienteNegocio cnegocio = new Negocio.ClienteNegocio();
 
             cliente = cnegocio.buscarCliente(dniParticipante);
-            if(cliente != null)
-            {
-                txtNombre.Text = cliente.Nombre;
-                txtApellido.Text = cliente.Apellido;
-                txtMail.Text = cliente.Mail;
-                txtDireccion.Text = cliente.Direccion;
-                txtCiudad.Text = cliente.Ciudad;
-                txtCP.Text = cliente.CodigoPostal.ToString();
-            }
+            
+            txtNombre.Text = cliente.Nombre;
+            txtApellido.Text = cliente.Apellido;
+            txtMail.Text = cliente.Mail;
+            txtDireccion.Text = cliente.Direccion;
+            txtCiudad.Text = cliente.Ciudad;
+            txtCP.Text = cliente.CodigoPostal.ToString();
+            
             
         }
 

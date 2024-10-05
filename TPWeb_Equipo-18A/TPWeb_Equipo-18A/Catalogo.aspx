@@ -11,7 +11,9 @@
             <ItemTemplate>
                 <div class="col">
                     <div class="card">
+                        <div class="card-img-top">
                         <%--aca va el carrousel de imagenes--%>
+                        </div>
                     </div>
                     <div class="card-body">
                         <h5 class="card-title"><%#Eval("Nombre") %></h5>

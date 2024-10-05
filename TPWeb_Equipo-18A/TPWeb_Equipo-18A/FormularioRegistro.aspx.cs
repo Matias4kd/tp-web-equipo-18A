@@ -12,7 +12,7 @@ namespace TPWeb_Equipo_18A
     public partial class FormularioRegistro : System.Web.UI.Page
     {
         public bool ClienteExistente = false;
-        
+        private Cliente cliente = null;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -40,10 +40,6 @@ namespace TPWeb_Equipo_18A
 
         protected void btnParticipar_Click(object sender, EventArgs e)
         {
-            ClienteNegocio cnegocio = new Negocio.ClienteNegocio();
-            Cliente cliente = new Cliente(); 
-
-            cliente = cnegocio.buscarCliente(int.Parse(cliente.Documento));
             cliente.Documento = txtDocumento.Text;
             cliente.Nombre = txtNombre.Text;
             cliente.Apellido = txtApellido.Text;
@@ -52,14 +48,15 @@ namespace TPWeb_Equipo_18A
             cliente.Ciudad = txtCiudad.Text;
             cliente.CodigoPostal = int.Parse(txtCP.Text);
 
+            string voucher = Session["voucher"].ToString();
+            int idProducto = int.Parse(Session["IDArt"].ToString());
+
+            ClienteNegocio cnegocio = new Negocio.ClienteNegocio();
+            
             if(cliente.ID == 0)
             {
                 cnegocio.agregarCliente(cliente);
             }
-
-            string voucher = Session["voucher"].ToString();
-            int idProducto = int.Parse(Session["IDArt"].ToString());
- 
             cliente = cnegocio.buscarCliente(int.Parse(cliente.Documento));
 
             VoucherNegocio voucherNegocio = new VoucherNegocio();
@@ -71,16 +68,18 @@ namespace TPWeb_Equipo_18A
         {
             int dniParticipante = int.Parse(txtDocumento.Text);
             Negocio.ClienteNegocio cnegocio = new Negocio.ClienteNegocio();
-            Cliente cliente = new Cliente();
-            cliente = cnegocio.buscarCliente(dniParticipante);
 
-            txtNombre.Text = cliente.Nombre;
-            txtApellido.Text = cliente.Apellido;
-            txtMail.Text = cliente.Mail;
-            txtDireccion.Text = cliente.Direccion;
-            txtCiudad.Text = cliente.Ciudad;
-            txtCP.Text = cliente.CodigoPostal.ToString();
-                       
+            cliente = cnegocio.buscarCliente(dniParticipante);
+            if(cliente != null)
+            {
+                txtNombre.Text = cliente.Nombre;
+                txtApellido.Text = cliente.Apellido;
+                txtMail.Text = cliente.Mail;
+                txtDireccion.Text = cliente.Direccion;
+                txtCiudad.Text = cliente.Ciudad;
+                txtCP.Text = cliente.CodigoPostal.ToString();
+            }
+            
         }
 
         void activarOpciones()

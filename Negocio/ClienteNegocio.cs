@@ -46,34 +46,7 @@ namespace Negocio
 				datos.cerrarConexion();
 			}
         }
-        /* public void agregarCliente(Cliente cliente)
-         {
-
-             try
-             {
-
-                 datos.setearConsulta("Insert into Clientes VALUES(@Documento,@Nombre,@Apellido,@Email,@Direccion,@Ciudad,@CP)");
-                 datos.setearParametro("@Documento", cliente.Documento);
-                 datos.setearParametro("@Nombre", cliente.Nombre);
-                 datos.setearParametro("@Apellido", cliente.Apellido);
-                 datos.setearParametro("@Email", cliente.Mail);
-                 datos.setearParametro("@Direccion", cliente.Direccion);
-                 datos.setearParametro("@Ciudad", cliente.Ciudad);
-                 datos.setearParametro("@CP", cliente.CodigoPostal);
-
-                 datos.ejecutarAccion();
-
-             }
-             catch (Exception ex)
-             {
-
-                 throw ex;
-             }
-             finally
-             {
-                 datos.cerrarConexion();
-             }
-         }*/
+       
 
 
         public int agregarCliente(Cliente cliente)
@@ -94,8 +67,8 @@ namespace Negocio
                 datos.setearParametro("@Ciudad", cliente.Ciudad);
                 datos.setearParametro("@CP", cliente.CodigoPostal);
 
-                // Ejecuta la consulta y obtiene el ID generado
-                int clienteId = (int)datos.ejecutarEscalar(); // Usamos ejecutarEscalar para obtener el ID
+               
+                int clienteId = (int)datos.ejecutarEscalar(); //  para obtener el ID
 
                 return clienteId; // Devuelve el ID del cliente recién creado
             }
@@ -105,7 +78,7 @@ namespace Negocio
             }
             finally
             {
-                datos.cerrarConexion(); // Cierra la conexión en el bloque finally
+                datos.cerrarConexion(); 
             }
         }
 

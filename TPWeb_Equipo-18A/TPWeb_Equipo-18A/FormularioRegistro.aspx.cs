@@ -51,74 +51,7 @@ namespace TPWeb_Equipo_18A
 
         }
 
-        /*protected void btnParticipar_Click(object sender, EventArgs e)
-        {
-            
-            ClienteNegocio cnegocio = new Negocio.ClienteNegocio();
-            string voucher = Session["voucher"].ToString();
-            int idProducto = int.Parse(Session["IDArt"].ToString());
-           
-            
-
-            if (cliente != null && cliente.ID > 0)
-            {
-                VoucherNegocio voucherNegocio = new VoucherNegocio();
-                voucherNegocio.cargarUso(voucher, idProducto, cliente.ID);
-                lblClienteExistente.Visible = false;
-                // Redireccionar o mostrar mensaje de éxito
-                lblExito.Text = "El registro se realizó con éxito, ya estás participando";
-                lblExito.Visible = true; // Hacer visible el mensaje
-                btnRegresar.Visible = true;
-
-            }
-            else
-            {
-
-
-                // Crear nuevo cliente si no existe
-                cliente = new Cliente
-                {
-                    Documento = txtDocumento.Text,
-                    Nombre = txtNombre.Text,
-                    Apellido = txtApellido.Text,
-                    Mail = txtMail.Text,
-                    Direccion = txtDireccion.Text,
-                    Ciudad = txtCiudad.Text,
-                    CodigoPostal = int.Parse(txtCP.Text)
-                };
-
-
-                if (cliente.ID == 0)
-                {
-                    cnegocio.agregarCliente(cliente);
-                }
-                cliente = cnegocio.buscarCliente(int.Parse(cliente.Documento));
-
-                VoucherNegocio voucherNegocio = new VoucherNegocio();
-
-                voucherNegocio.cargarUso(voucher, idProducto, cliente.ID);
-                txtNombre.Enabled = false;
-                txtApellido.Enabled = false;
-                txtMail.Enabled = false;
-                txtDireccion.Enabled = false;
-                txtCiudad.Enabled = false;
-                txtCP.Enabled = false;
-
-                btnParticipar.Visible = false;
-                btnRegresar.Visible = false;
-
-
-                // Redireccionar o mostrar mensaje de éxito
-                lblExito.Text = "El registro se realizó con éxito, ya estás participando";
-                lblExito.Visible = true;
-                btnRegresar.Visible = true;
-
-
-            }
-
-
-
-        }*/
+       
 
         protected void btnParticipar_Click(object sender, EventArgs e)
         {
@@ -126,10 +59,10 @@ namespace TPWeb_Equipo_18A
             string voucher = Session["voucher"].ToString();
             int idProducto = int.Parse(Session["IDArt"].ToString());
 
-            // Primero, busca al cliente en la base de datos por su documento.
+            // Buusca al cliente en la base de datos por su documento.
             cliente = cnegocio.buscarCliente(int.Parse(txtDocumento.Text));
 
-            // Si el cliente ya existe (cliente.ID > 0), no lo agregamos de nuevo.
+            // Si el cliente ya existe (cliente.ID > 0), no lo agregamos de nuevo, asociamos idcliente al codigo voucher
             if (cliente != null && cliente.ID > 0)
             {
                 VoucherNegocio voucherNegocio = new VoucherNegocio();
@@ -137,14 +70,14 @@ namespace TPWeb_Equipo_18A
                 lblClienteExistente.Visible = false;
                 btnParticipar.Visible = false;
 
-                // Mensaje de éxito
+                
                 lblExito.Text = "El registro se realizó con éxito, ya estás participando";
                 lblExito.Visible = true;
                 btnRegresar.Visible = true;
             }
             else
             {
-                // Si el cliente no existe, lo creamos.
+                // Cliente no existe, se crea
                 cliente = new Cliente
                 {
                     Documento = txtDocumento.Text,
@@ -159,13 +92,13 @@ namespace TPWeb_Equipo_18A
                 // Llamamos a agregarCliente para insertar el nuevo cliente en la base de datos.
                 int nuevoId = cnegocio.agregarCliente(cliente); // Este método debe devolver el ID del nuevo cliente.
 
-                // Luego de agregar, buscamos nuevamente el cliente para asegurarnos de tener todos los datos actualizados.
+                // buscamos nuevamente el cliente para asegurarnos de tener todos los datos actualizados.
                 cliente = cnegocio.buscarCliente(int.Parse(cliente.Documento));
 
                 VoucherNegocio voucherNegocio = new VoucherNegocio();
                 voucherNegocio.cargarUso(voucher, idProducto, cliente.ID);
 
-                // Deshabilitar los campos del formulario
+                
                 txtNombre.Enabled = false;
                 txtApellido.Enabled = false;
                 txtMail.Enabled = false;
@@ -176,7 +109,7 @@ namespace TPWeb_Equipo_18A
                 btnParticipar.Visible = false;
                 btnRegresar.Visible = true;
 
-                // Mensaje de éxito
+                
                 lblExito.Text = "El registro se realizó con éxito, ya estás participando";
                 lblExito.Visible = true;
             }
@@ -201,12 +134,12 @@ namespace TPWeb_Equipo_18A
 
                
 
-                if (cliente != null && cliente.ID > 0) // Asegurarse de que el cliente realmente exista
+                if (cliente != null && cliente.ID > 0) 
                 {
                     lblClienteExistente.Visible = true;
                     lblClienteExistente.Text = "Cliente existente";
 
-                    // Cargar los datos del cliente en los campos de texto
+                    
                     txtNombre.Text = cliente.Nombre;
                     txtApellido.Text = cliente.Apellido;
                     txtMail.Text = cliente.Mail;
@@ -223,7 +156,7 @@ namespace TPWeb_Equipo_18A
                     txtCiudad.Enabled = false;
                     txtCP.Enabled = false;
 
-                    btnParticipar.Visible = true; // Ocultar botón si ya es un cliente existente
+                    btnParticipar.Visible = true; 
                     btnRegresar.Visible = false;
 
 

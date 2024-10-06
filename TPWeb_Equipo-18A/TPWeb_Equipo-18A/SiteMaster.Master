@@ -4,9 +4,7 @@
 
 <html>
 <head runat="server">
-
- 
-
+    <link rel="stylesheet" href="<%= ResolveUrl("~/Content/styles.css") %>">
     <title>Promo Ganá UTN</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>

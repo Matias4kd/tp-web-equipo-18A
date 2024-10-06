@@ -12,7 +12,25 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-img-top">
-                        <%--aca va el carrousel de imagenes--%>
+                        <div id="carousel_<%# Eval("IDArticulo") %>" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <asp:Repeater ID="repImages" runat="server" DataSource='<%# (Eval("ListImagen")) %>'>
+                                    <ItemTemplate>
+                                        <div class="carousel-item <%# Container.ItemIndex == 0 ? "active" : "" %>">
+                                            <img src='<%# Eval("UrlImagen") %>' class="d-block w-100" alt="...">
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:Repeater>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel_<%# Eval("IDArticulo") %>" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carousel_<%# Eval("IDArticulo") %>" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>%>
                         </div>
                     </div>
                     <div class="card-body">

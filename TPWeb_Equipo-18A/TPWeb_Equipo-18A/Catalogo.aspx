@@ -21,6 +21,9 @@
                                         </div>
                                     </ItemTemplate>
                                 </asp:Repeater>
+                            
+                        </div>
+                    </div>
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#carousel_<%# Eval("IDArticulo") %>" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -31,8 +34,6 @@
                                 <span class="visually-hidden">Next</span>
                             </button>
                         </div>
-                        </div>
-                    </div>
                     <div class="card-body">
                         <h5 class="card-title"><%#Eval("Nombre") %></h5>
                         <p class="card-text"><%#Eval("Descripcion")%></p>

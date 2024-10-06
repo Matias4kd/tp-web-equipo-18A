@@ -4,6 +4,10 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+    <appSettings>
+    <add key="ValidationSettings:UnobtrusiveValidationMode" value="None" />
+</appSettings>
+
     <br />
     <div class="row">
         <div class="col-4"></div>

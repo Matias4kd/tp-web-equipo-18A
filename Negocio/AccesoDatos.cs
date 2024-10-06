@@ -51,6 +51,8 @@ namespace Negocio
 
                 throw ex;
             }
+            finally { comando.Parameters.Clear(); }
+          
 
         }
 
@@ -68,6 +70,11 @@ namespace Negocio
 
                 throw ex;
             }
+            finally
+            {
+                comando.Parameters.Clear();
+                conexion.Close();
+            }
 
         }
 
@@ -77,5 +84,24 @@ namespace Negocio
                 lector.Close();
             conexion.Close();  
         }
+
+        public object ejecutarEscalar()
+        {
+            comando.Connection = conexion;
+            try
+            {
+                conexion.Open();
+                return comando.ExecuteScalar(); // Devuelve el primer valor de la primera fila
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.Close(); // Asegurarse de cerrar la conexión después de ejecutar
+            }
+        }
+
     }
 }

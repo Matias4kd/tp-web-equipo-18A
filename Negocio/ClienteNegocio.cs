@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -38,20 +39,53 @@ namespace Negocio
 			catch (Exception)
 			{
 
-				throw;
+			throw;
 			}
 			finally
 			{
 				datos.cerrarConexion();
 			}
         }
-		public void agregarCliente(Cliente cliente)
-		{
-            
+        /* public void agregarCliente(Cliente cliente)
+         {
+
+             try
+             {
+
+                 datos.setearConsulta("Insert into Clientes VALUES(@Documento,@Nombre,@Apellido,@Email,@Direccion,@Ciudad,@CP)");
+                 datos.setearParametro("@Documento", cliente.Documento);
+                 datos.setearParametro("@Nombre", cliente.Nombre);
+                 datos.setearParametro("@Apellido", cliente.Apellido);
+                 datos.setearParametro("@Email", cliente.Mail);
+                 datos.setearParametro("@Direccion", cliente.Direccion);
+                 datos.setearParametro("@Ciudad", cliente.Ciudad);
+                 datos.setearParametro("@CP", cliente.CodigoPostal);
+
+                 datos.ejecutarAccion();
+
+             }
+             catch (Exception ex)
+             {
+
+                 throw ex;
+             }
+             finally
+             {
+                 datos.cerrarConexion();
+             }
+         }*/
+
+
+        public int agregarCliente(Cliente cliente)
+        {
             try
             {
+                // Consulta para insertar el cliente y obtener el ID generado automáticamente
+                datos.setearConsulta("INSERT INTO Clientes (Documento, Nombre, Apellido, Email, Direccion, Ciudad, CP) " +
+                                     "OUTPUT INSERTED.Id " + // Esto devuelve el ID generado automáticamente
+                                     "VALUES (@Documento, @Nombre, @Apellido, @Email, @Direccion, @Ciudad, @CP)");
 
-                datos.setearConsulta("Insert into Clientes VALUES(@Documento,@Nombre,@Apellido,@Email,@Direccion,@Ciudad,@CP)");
+                // Establece los parámetros con los valores del cliente
                 datos.setearParametro("@Documento", cliente.Documento);
                 datos.setearParametro("@Nombre", cliente.Nombre);
                 datos.setearParametro("@Apellido", cliente.Apellido);
@@ -60,18 +94,32 @@ namespace Negocio
                 datos.setearParametro("@Ciudad", cliente.Ciudad);
                 datos.setearParametro("@CP", cliente.CodigoPostal);
 
-                datos.ejecutarLectura();
+                // Ejecuta la consulta y obtiene el ID generado
+                int clienteId = (int)datos.ejecutarEscalar(); // Usamos ejecutarEscalar para obtener el ID
 
+                return clienteId; // Devuelve el ID del cliente recién creado
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally
             {
-                datos.cerrarConexion();
+                datos.cerrarConexion(); // Cierra la conexión en el bloque finally
             }
         }
+
+
+
+
+
+
+
     }
+
+
+
+
+
+
 }

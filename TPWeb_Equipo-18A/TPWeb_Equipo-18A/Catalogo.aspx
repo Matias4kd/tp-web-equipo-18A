@@ -12,7 +12,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-img-top">
-                        <div id="carousel_<%# Eval("IDArticulo") %>" class="carousel slide" data-bs-ride="carousel">
+                        <div id="carousel_<%# Eval("IDArticulo") %>" class="carousel slide">
                             <div class="carousel-inner">
                                 <asp:Repeater ID="repImages" runat="server" DataSource='<%# (Eval("ListImagen")) %>'>
                                     <ItemTemplate>

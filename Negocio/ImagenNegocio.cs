@@ -17,11 +17,11 @@ namespace Negocio
             datos.ejecutarLectura();
 
             List<Imagen> imagenes = new List<Imagen>();
-            Imagen imagen = new Imagen();
-            imagen.IdArticulo = idArticulo;
 
             while (datos.lector.Read())  // recorremos los resultados de la consulta
             {
+                Imagen imagen = new Imagen();
+                imagen.IdArticulo = idArticulo;
                 imagen.UrlImagen = (string)datos.lector["ImagenUrl"];
                 imagen.Id = (int)datos.lector["Id"];
                 imagenes.Add(imagen);

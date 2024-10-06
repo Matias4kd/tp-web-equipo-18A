@@ -21,7 +21,9 @@ namespace TPWeb_Equipo_18A
                 ListaArticulo = negocio.listar();
                 ImagenNegocio Inegocio = new ImagenNegocio();
                 foreach (Articulo art in ListaArticulo)
-                { art.ListImagen = Inegocio.ObtenerImagenes(art.IdArticulo);}
+                { 
+                    art.ListImagen = Inegocio.ObtenerImagenes(art.IdArticulo);
+                }
 
                 repRepetidor.DataSource = ListaArticulo;
                 repRepetidor.DataBind();

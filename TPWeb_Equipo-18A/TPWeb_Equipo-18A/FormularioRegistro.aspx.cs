@@ -41,7 +41,7 @@ namespace TPWeb_Equipo_18A
             {
                 activarOpciones();
             }
-            
+
         }
 
         protected void btnRegresar_Click(object sender, EventArgs e)
@@ -51,10 +51,19 @@ namespace TPWeb_Equipo_18A
 
         }
 
-       
+
 
         protected void btnParticipar_Click(object sender, EventArgs e)
         {
+
+            if (!Page.IsValid)
+            {
+                lblExito.Text = "Por favor, complete todos los campos obligatorios.";
+                lblExito.ForeColor = System.Drawing.Color.Red;
+                lblExito.Visible = true;
+                return;
+            }
+
             ClienteNegocio cnegocio = new Negocio.ClienteNegocio();
             string voucher = Session["voucher"].ToString();
             int idProducto = int.Parse(Session["IDArt"].ToString());
@@ -70,7 +79,7 @@ namespace TPWeb_Equipo_18A
                 lblClienteExistente.Visible = false;
                 btnParticipar.Visible = false;
 
-                
+
                 lblExito.Text = "El registro se realizó con éxito, ya estás participando";
                 lblExito.Visible = true;
                 btnRegresar.Visible = true;
@@ -98,7 +107,7 @@ namespace TPWeb_Equipo_18A
                 VoucherNegocio voucherNegocio = new VoucherNegocio();
                 voucherNegocio.cargarUso(voucher, idProducto, cliente.ID);
 
-                
+
                 txtNombre.Enabled = false;
                 txtApellido.Enabled = false;
                 txtMail.Enabled = false;
@@ -109,9 +118,10 @@ namespace TPWeb_Equipo_18A
                 btnParticipar.Visible = false;
                 btnRegresar.Visible = true;
 
-                
+
                 lblExito.Text = "El registro se realizó con éxito, ya estás participando";
                 lblExito.Visible = true;
+                lblExito.ForeColor = System.Drawing.Color.Green;
             }
         }
 
@@ -120,10 +130,8 @@ namespace TPWeb_Equipo_18A
         {
             if (string.IsNullOrWhiteSpace(txtDocumento.Text))
             {
-
                 Response.Redirect("FormularioRegistro.aspx");
             }
-
 
             int dniParticipante;
 
@@ -132,21 +140,17 @@ namespace TPWeb_Equipo_18A
                 Negocio.ClienteNegocio cnegocio = new Negocio.ClienteNegocio();
                 cliente = cnegocio.buscarCliente(dniParticipante);
 
-               
-
-                if (cliente != null && cliente.ID > 0) 
+                if (cliente != null && cliente.ID > 0)
                 {
                     lblClienteExistente.Visible = true;
                     lblClienteExistente.Text = "Cliente existente";
 
-                    
                     txtNombre.Text = cliente.Nombre;
                     txtApellido.Text = cliente.Apellido;
                     txtMail.Text = cliente.Mail;
                     txtDireccion.Text = cliente.Direccion;
                     txtCiudad.Text = cliente.Ciudad;
                     txtCP.Text = cliente.CodigoPostal.ToString();
-
 
                     // Deshabilitar campos para evitar modificaciones
                     txtNombre.Enabled = false;
@@ -156,15 +160,14 @@ namespace TPWeb_Equipo_18A
                     txtCiudad.Enabled = false;
                     txtCP.Enabled = false;
 
-                    btnParticipar.Visible = true; 
+                    btnParticipar.Visible = true;
                     btnRegresar.Visible = false;
-
-
                 }
-                else // Si el cliente no existe
+                else // Cliente no existe
                 {
                     cliente = null; // Asegurarse de limpiar el objeto cliente
                     lblClienteExistente.Visible = false;
+                    limpiarCampos(); // Limpiar los campos
                     activarOpciones(); // Habilitar los campos para un nuevo cliente
                 }
             }
@@ -172,11 +175,33 @@ namespace TPWeb_Equipo_18A
             {
                 lblClienteExistente.Visible = true;
                 lblClienteExistente.Text = "DNI inválido";
+                limpiarCampos(); // Limpiar los campos en caso de DNI inválido
             }
         }
 
+        private void limpiarCampos()
+        {
+            txtNombre.Text = string.Empty;
+            txtApellido.Text = string.Empty;
+            txtMail.Text = string.Empty;
+            txtDireccion.Text = string.Empty;
+            txtCiudad.Text = string.Empty;
+            txtCP.Text = string.Empty;
 
- 
+            // Habilitar los campos para edición
+            txtNombre.Enabled = true;
+            txtApellido.Enabled = true;
+            txtMail.Enabled = true;
+            txtDireccion.Enabled = true;
+            txtCiudad.Enabled = true;
+            txtCP.Enabled = true;
+
+            btnParticipar.Visible = false; // Ocultar el botón hasta que sea relevante
+            btnRegresar.Visible = false;  // Mantener oculto inicialmente
+        }
+
+
+
 
         void activarOpciones()
         {
@@ -195,7 +220,7 @@ namespace TPWeb_Equipo_18A
             btnParticipar.Visible = true;
         }
 
-   
+
 
     }
 }
